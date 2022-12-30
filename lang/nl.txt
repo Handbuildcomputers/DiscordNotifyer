@@ -1,0 +1,5 @@
+Er is een contact form ingediend!
+Er is een account aangemaakt in de webwinkel!
+Er is een bevestigde order binnengekomen!
+Er is een betaling verwerkt in de webwinkel!
+Er is een testmail verstuurd vanuit de back office.

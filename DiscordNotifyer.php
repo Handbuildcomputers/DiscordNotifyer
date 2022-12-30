@@ -35,9 +35,11 @@ class DiscordNotifyer extends Module {
 	public function uninstall() {
 		if (
 			!parent::uninstall()
+
 		) {
 			return false;
 		} else {
+			Configuration::deleteByName($this->name."WEBHOOK_URL");
 			return true;
 		}
 	}
@@ -51,6 +53,7 @@ class DiscordNotifyer extends Module {
 		if (Tools::isSubmit("submit" . $this->name)) {
 			// Get webhook url
 			$configValue = (string) Tools::getValue("WEBHOOK_URL");
+			$languageModule = (string) Tools::getValue("LANGUAGE_VALUE");
 
 			// check that the value is valid
 			if (empty($configValue) || !Validate::isGenericName($configValue)) {
@@ -59,8 +62,13 @@ class DiscordNotifyer extends Module {
 			} else {
 				// value is ok, update it and display a confirmation message
 				Configuration::updateValue("WEBHOOK_URL", $configValue);
+				// Setting language
+				Configuration::updateValue("LANGUAGE", $languageModule);				
 				$output = $this->displayConfirmation($this->l("Settings updated"));
+
 			}
+
+
 		}
 
 		// display any message, then the form
@@ -83,7 +91,23 @@ class DiscordNotifyer extends Module {
 						"name" => "WEBHOOK_URL",
 						"size" => 20,
 						"required" => true,
+
 					],
+					[
+						"type" => "select",
+						"label" => $this->l("Language"),
+						"name" => "LANGUAGE_VALUE",
+						"multiple" => false,
+						"required" => true,
+						'options' => array(
+							'query' => array(
+								array('key' => 'English', 'name' => 'English'),
+								array('key' => 'Dutch', 'name' => 'Dutch'),
+							),
+							'id' => 'key',
+							'name' => 'name'
+						)
+					]					
 				],
 				"submit" => [
 					"title" => $this->l("Save"),
@@ -104,8 +128,9 @@ class DiscordNotifyer extends Module {
 		// Default language
 		$helper->default_form_language = (int) Configuration::get("PS_LANG_DEFAULT");
 
-		// Load current value into the form
-		$helper->fields_value["WEBHOOK_URL"] = Tools::getValue("WEBHOOK_URL", Configuration::get("WEBHOOK_URL"));
+		// Load current values into the form
+		$helper->fields_value["WEBHOOK_URL"] = Configuration::get("WEBHOOK_URL");
+		$helper->fields_value["LANGUAGE_VALUE"] = Configuration::get("LANGUAGE");
 
 		return $helper->generateForm([$form]);
 	}
@@ -113,22 +138,36 @@ class DiscordNotifyer extends Module {
 
 	// Mail hook trigger
 	public function hookactionEmailSendBefore($param) {
+
+		// Checks and sets language
+		switch(Configuration::get("LANGUAGE")){
+			case "English":
+				$file_lang = "/home/handbuildcomputers.nl/public_html/modules/DiscordNotifyer/lang/eng.txt";
+				break;
+			case "Dutch":
+				$file_lang = "/home/handbuildcomputers.nl/public_html/modules/DiscordNotifyer/lang/nl.txt";
+				break;
+		}
+
+		// Opening txt file
+		$lines = file($file_lang);
+
 		// Getting type of mail that will be send
 		switch($param["template"]){
 			case "contact_form":
-				$type_mail = "Er is een contact form ingediend!";
+				$type_mail = strval($lines[0]);
 				break;
 			case "account":
-				$type_mail = "Er is een account aangemaakt in de webstore!";
+				$type_mail = strval($lines[1]);
 				break;
 			case "order_conf":
-				$type_mail = "Er is een bevestigde order binnengekomen!";
+				$type_mail = strval($lines[2]);
 				break;
 			case "payment":
-				$type_mail = "Er is een betaling verwerkt in de webstore!";
+				$type_mail = strval($lines[3]);
 				break;
 			case "test":
-				$type_mail = "Er is een testmail verstuurd vanuit de backoffice.";
+				$type_mail = strval($lines[4]);
 				break;			
 		}
 
