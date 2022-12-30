@@ -1,7 +1,7 @@
 # Prestashop_discord_notify_module
+<img src="https://github.com/kelvin-codes-stuff/DiscordNotifyer/blob/main/logo.png?raw=true" width="350" title="hover text">
 
 How to use?
-
 1) First, download this repository as a ZIP. Then extract the ZIP. Click then on "DiscordNotifyer-main".
 2) In that folder there is a folde rwith the same name. Rename that folder to "DiscordNotifyer".
 3) Right click on the folder, and click "Compress to zipp file".
