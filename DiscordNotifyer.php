@@ -38,7 +38,7 @@ class DiscordNotifyer extends Module {
 			parent::uninstall() &&
 			// Deletes webhook and langauge values
 			Configuration::deleteByName("WEBHOOK_URL") && 
-			Configuration::deleteByName("LANGUAGE_VALUE")
+			Configuration::deleteByName("LANGUAGE")
 		);
 	}
 
@@ -52,6 +52,7 @@ class DiscordNotifyer extends Module {
 			// Get webhook url
 			$configValue = (string) Tools::getValue("WEBHOOK_URL");
 			$languageModule = (string) Tools::getValue("LANGUAGE_VALUE");
+			$contact_form_switch = (string) Tools::getValue("SWITCH_CONTACT_FORM");
 
 			// check that the value is valid
 			if (empty($configValue) || !Validate::isGenericName($configValue)) {
@@ -61,7 +62,10 @@ class DiscordNotifyer extends Module {
 				// value is ok, update it and display a confirmation message
 				Configuration::updateValue("WEBHOOK_URL", $configValue);
 				// Setting language
-				Configuration::updateValue("LANGUAGE", $languageModule);				
+				Configuration::updateValue("LANGUAGE", $languageModule);	
+				// Switches
+				Configuration::updateValue("SWITCH_CONTACT_FORM", $SWITCH_CONTACT_FORM);	
+
 				$output = $this->displayConfirmation($this->l("Settings updated"));
 
 			}
@@ -105,7 +109,52 @@ class DiscordNotifyer extends Module {
 							"id" => "key",
 							"name" => "name"
 						)
-					]					
+						],	
+						[
+						"type" => "switch",
+						"label" => $this->l("contact form notification"),
+						"name" => "SWITCH_CONTACT_FORM",
+						"choices" => array(
+								"OFF" => true,
+								"ON" => false,
+						)
+						],
+						[
+						"type" => "switch",
+						"label" => $this->l("Account creation notification"),
+						"name" => "SWITCH_ACCOUNT",
+						"choices" => array(
+								"OFF" => true,
+								"ON" => false,
+						)
+						],	
+						[
+						"type" => "switch",
+						"label" => $this->l("Order confirmed notification"),
+						"name" => "SWITCH_ORDER_CONF",
+						"choices" => array(
+								"OFF" => true,
+								"ON" => false,
+						)
+						],	
+						[
+						"type" => "switch",
+						"label" => $this->l("Payment notification"),
+						"name" => "SWITCH_PAYMENT",
+						"choices" => array(
+								"OFF" => true,
+								"ON" => false,
+						)
+						],			
+						[
+						"type" => "switch",
+						"label" => $this->l("Test mail notification"),
+						"name" => "SWITCH_TEST",
+						"choices" => array(
+								"OFF" => true,
+								"ON" => false,
+							)
+							],																																					
 				],
 				"submit" => [
 					"title" => $this->l("Save"),
@@ -129,6 +178,7 @@ class DiscordNotifyer extends Module {
 		// Load current values into the form
 		$helper->fields_value["WEBHOOK_URL"] = Configuration::get("WEBHOOK_URL");
 		$helper->fields_value["LANGUAGE_VALUE"] = Configuration::get("LANGUAGE");
+		$helper->fields_value["LANGUAGE_VALUE"] = Configuration::get("SWITCH_CONTACT_FORM");
 
 		return $helper->generateForm([$form]);
 	}
@@ -173,7 +223,7 @@ class DiscordNotifyer extends Module {
 		// Setting headers
 		$headers = [ "Content-Type: application/json; charset=utf-8" ];
 		// Webhook sending content
-		$content = [ "username" => "Webstore", "content" => strval($type_mail) ];
+		$content = [ "username" => "Webstore", "content" => strval(Configuration::get("SWITCH_CONTACT_FORM")) ];
 		
 
 		// Initialize curl and sending request
