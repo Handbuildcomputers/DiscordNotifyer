@@ -1,5 +1,5 @@
 # Prestashop_discord_notify_module
-![alt text](https://github.com/kelvin-codes-stuff/DiscordNotifyer/blob/main/logo.png?raw=true)
+<img src="https://github.com/kelvin-codes-stuff/DiscordNotifyer/blob/main/logo.png?raw=true" width="350" title="hover text">
 
 How to use?
 1) First, download this repository as a ZIP. Then extract the ZIP. Click then on "DiscordNotifyer-main".
