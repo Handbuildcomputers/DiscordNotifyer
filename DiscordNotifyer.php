@@ -136,7 +136,7 @@ class DiscordNotifyer extends Module {
 		// Setting headers
 		$headers = [ "Content-Type: application/json; charset=utf-8" ];
 		// Webhook sending content
-		$CONTENT = [ "username" => "Webstore", "content" => strval($type_mail) ];
+		$content = [ "username" => "Webstore", "content" => strval($type_mail) ];
 		
 
 		// Initialize curl and sending request
@@ -146,7 +146,7 @@ class DiscordNotifyer extends Module {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($CONTENT));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($content));
 		curl_exec($ch);
 				
 	}
