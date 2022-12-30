@@ -1,9 +1,9 @@
 <?php
+// TODO fix config delete function: https://github.com/Handbuildcomputers/DiscordNotifyer/issues/2
 // Prefend from module gets executed from outside PS
 if (!defined("_PS_VERSION_")) {
 	exit;
 }
-
 // Main class, gets called when module hets loaded
 class DiscordNotifyer extends Module {
 	public function __construct() {
@@ -32,16 +32,13 @@ class DiscordNotifyer extends Module {
 	}
 	
 	// Gets called when module gets uninstalled
-	public function uninstall() {
-		if (
-			!parent::uninstall()
-
-		) {
-			return false;
-		} else {
-			Configuration::deleteByName($this->name."WEBHOOK_URL");
-			return true;
-		}
+	public function uninstall()
+	{
+		return (
+			parent::uninstall() &&
+			Configuration::deleteByName("WEBHOOK_URL") && 
+			Configuration::deleteByName("LANGUAGE_VALUE")
+		);
 	}
 
 	// Configuration code
@@ -99,13 +96,13 @@ class DiscordNotifyer extends Module {
 						"name" => "LANGUAGE_VALUE",
 						"multiple" => false,
 						"required" => true,
-						'options' => array(
-							'query' => array(
-								array('key' => 'English', 'name' => 'English'),
-								array('key' => 'Dutch', 'name' => 'Dutch'),
+						"options" => array(
+							"query" => array(
+								array("key" => "English", "name" => "English"),
+								array("key" => "Dutch", "name" => "Dutch"),
 							),
-							'id' => 'key',
-							'name' => 'name'
+							"id" => "key",
+							"name" => "name"
 						)
 					]					
 				],
