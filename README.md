@@ -1,4 +1,5 @@
 # Prestashop_discord_notify_module
+![alt text](https://avatars.githubusercontent.com/u/121678902?s=200&v=4)
 
 How to use?
 
