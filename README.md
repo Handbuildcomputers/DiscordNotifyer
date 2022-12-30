@@ -1,1 +1,1 @@
-# DiscordNotifyer
+# Prestashop_discord_notify_module
