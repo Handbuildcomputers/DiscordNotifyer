@@ -9,7 +9,7 @@ class DiscordNotifyer extends Module {
 	public function __construct() {
 		$this->name = "DiscordNotifyer";
 		$this->tab = "checkout";
-		$this->version = "1.0.0";
+		$this->version = "2.0.0";
 		$this->author = "Kelvin de Reus";
 		$this->need_instance = 0;
 		// Checks compatiblity
