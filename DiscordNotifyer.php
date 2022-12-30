@@ -113,38 +113,41 @@ class DiscordNotifyer extends Module {
 
 	// Mail hook trigger
 	public function hookactionEmailSendBefore($param) {
-		
-		// Getting type
-		if($param["template"] == "contact_form"){
-			$type_mail = "Er is een contact form ingediend!";
-		} elseif ($param["template"] == "account") {
-			$type_mail = "Er is een account aangemaakt in de webstore!";
-		} elseif ($param["template"] == "order_conf") {
-			$type_mail = "Er is een bevestigde order binnengekomen!";
-		} elseif ($param["template"] == "payment") {
-			$type_mail = "Er is een betaling verwerkt in de webstore!";
-		} elseif ($param["template"] == "test") {
-			$type_mail = "Er is een testmail verstuurd vanuit de backoffice.";
-		} else {
-			
+		// Getting type of mail that will be send
+		switch($param["template"]){
+			case "contact_form":
+				$type_mail = "Er is een contact form ingediend!";
+				break;
+			case "account":
+				$type_mail = "Er is een account aangemaakt in de webstore!";
+				break;
+			case "order_conf":
+				$type_mail = "Er is een bevestigde order binnengekomen!";
+				break;
+			case "payment":
+				$type_mail = "Er is een betaling verwerkt in de webstore!";
+				break;
+			case "test":
+				$type_mail = "Er is een testmail verstuurd vanuit de backoffice.";
+				break;			
 		}
 
-		// Getting URL from config page
-		$url = strval(Tools::getValue("WEBHOOK_URL", Configuration::get("WEBHOOK_URL")));
+
 		// Setting headers
 		$headers = [ "Content-Type: application/json; charset=utf-8" ];
 		// Webhook sending content
-		$POST = [ "username" => "Webstore", "content" => strval($type_mail) ];
+		$CONTENT = [ "username" => "Webstore", "content" => strval($type_mail) ];
 		
-		// Curl stuff
+
+		// Initialize curl and sending request
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_URL, strval(Configuration::get("WEBHOOK_URL")));
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($POST));
-		$response   = curl_exec($ch);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($CONTENT));
+		curl_exec($ch);
 				
 	}
 
