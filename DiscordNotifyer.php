@@ -1,13 +1,13 @@
 <?php
-// TODO fix config delete function: https://github.com/Handbuildcomputers/DiscordNotifyer/issues/2
 // Prefend from module gets executed from outside PS
 if (!defined("_PS_VERSION_")) {
 	exit;
 }
 
 
-// Main class, gets called when module hets loaded
+// Main class, gets called when module Gets loaded
 class DiscordNotifyer extends Module {
+	// Gets called when module gets loaded
 	public function __construct() {
 		$this->name = "DiscordNotifyer";
 		$this->tab = "checkout";
@@ -31,7 +31,8 @@ class DiscordNotifyer extends Module {
 	public function install()
 	{	
 		// Register actionEmailSendBefore hook
-		return parent::install() && $this->registerHook("actionEmailSendBefore");
+		return parent::install()
+		&& $this->registerHook("actionEmailSendBefore");
 	}
 	
 
@@ -56,12 +57,13 @@ class DiscordNotifyer extends Module {
 
 	// Configuration code
 	public function getContent()
-	{
+	{	
+		// Idfk why this is here but just don't touch it lol
 		$output = "";
 
 		// When forum gets submitted
 		if (Tools::isSubmit("submit" . $this->name)) {
-			// Get webhook url
+			// Get values from config form
 			$configValue = (string) Tools::getValue("WEBHOOK_URL");
 			$languageModule = (string) Tools::getValue("LANGUAGE_VALUE");
 			$switchContactForm = (string) Tools::getValue("SWITCH_CONTACT_FORM");
@@ -75,11 +77,11 @@ class DiscordNotifyer extends Module {
 				// invalid value, show an error
 				$output = $this->displayError($this->l("Invalid Configuration value"));
 			} else {
-				// value is ok, update it and display a confirmation message
+				// Sets setting webhook url
 				Configuration::updateValue("WEBHOOK_URL", $configValue);
-				// Setting language
+				// Sets setting language
 				Configuration::updateValue("LANGUAGE", $languageModule);	
-				// Switches
+				// Sets setting switches
 				Configuration::updateValue("SWITCH_CONTACT_FORM", $switchContactForm);	
 				Configuration::updateValue("SWITCH_ACCOUNT_CREATION", $switchAccount);	
 				Configuration::updateValue("SWITCH_ORDER_CONF", $switchOrderConf);	
@@ -89,7 +91,6 @@ class DiscordNotifyer extends Module {
 				$output = $this->displayConfirmation($this->l("Settings updated"));
 
 			}
-
 
 		}
 
@@ -229,6 +230,7 @@ class DiscordNotifyer extends Module {
 						],
 					],																					
 				],
+				// Creates submit button
 				"submit" => [
 					"title" => $this->l("Save"),
 					"class" => "btn btn-default pull-right",
@@ -257,30 +259,30 @@ class DiscordNotifyer extends Module {
 		$helper->fields_value["SWITCH_PAYMENT"] = Configuration::get("SWITCH_PAYMENT");
 		$helper->fields_value["SWITCH_TEST"] = Configuration::get("SWITCH_TEST");
 
-
+		// Generates the form
 		return $helper->generateForm([$form]);
 	}
 
 
-	// Mail hook trigger
+	// Mail hook trigger function
 	public function hookactionEmailSendBefore($param) {
 
-		// Checks and sets language
+		// Gets language set by the user in the config
 		switch(Configuration::get("LANGUAGE")){
+			// If set to English, use eng.txt and assign it to $file_lang
 			case "English":
 				$file_lang = "/home/handbuildcomputers.nl/public_html/modules/DiscordNotifyer/lang/eng.txt";
 				break;
+			// If set to Dutch, use nl.txt and assign it to $file_lang
 			case "Dutch":
 				$file_lang = "/home/handbuildcomputers.nl/public_html/modules/DiscordNotifyer/lang/nl.txt";
 				break;
 		}
 
-
 		// Opening txt file
 		$lines = file($file_lang);
 
-
-		// Webhook
+		// Webhook function
 		function webhookDiscord($type_mail) {
 			// Webhook
 			// Setting headers
@@ -300,7 +302,7 @@ class DiscordNotifyer extends Module {
 			}
 
 
-		// Getting type of mail that will be send
+		// Getting type of mail that will be send, and send right text and calls the webhook
 		switch($param["template"]){
 			case "contact_form" && Configuration::get("SWITCH_CONTACT_FORM") == "on":
 				webhookDiscord(strval($lines[0]));
