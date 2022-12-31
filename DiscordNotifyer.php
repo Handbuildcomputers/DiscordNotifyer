@@ -140,6 +140,7 @@ class DiscordNotifyer extends Module {
 						"label" => $this->l("Contact form notification"),
 						"name" => "SWITCH_CONTACT_FORM",
 						"class" => "fixed-width-xs",
+						"desc" => $this->l("Enable this to get contact form submissions notifications"),
 						"values" => [
 							[
 								"id" => "active_on",
@@ -159,6 +160,7 @@ class DiscordNotifyer extends Module {
 						"label" => $this->l("Account creation notification"),
 						"name" => "SWITCH_ACCOUNT_CREATION",
 						"class" => "fixed-width-xs",
+						"desc" => $this->l("Enable this to get a notification when someone makes a account"),
 						"values" => [
 							[
 								"id" => "active_on",
@@ -178,6 +180,7 @@ class DiscordNotifyer extends Module {
 						"label" => $this->l("Order confirmed notification"),
 						"name" => "SWITCH_ORDER_CONF",
 						"class" => "fixed-width-xs",
+						"desc" => $this->l("Enable this to get a notification when someone makes a order"),
 						"values" => [
 							[
 								"id" => "active_on",
@@ -197,6 +200,7 @@ class DiscordNotifyer extends Module {
 						"label" => $this->l("Payment notification"),
 						"name" => "SWITCH_PAYMENT",
 						"class" => "fixed-width-xs",
+						"desc" => $this->l("Enable this to get a notification when someone makes a payment"),
 						"values" => [
 							[
 								"id" => "active_on",
@@ -216,6 +220,7 @@ class DiscordNotifyer extends Module {
 						"label" => $this->l("Test mail notification"),
 						"name" => "SWITCH_TEST",
 						"class" => "fixed-width-xs",
+						"desc" => $this->l("Enable this to get a notification when someone requests a test mail in the backoffice"),
 						"values" => [
 							[
 								"id" => "active_on",
