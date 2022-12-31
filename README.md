@@ -11,7 +11,7 @@ How to use?
 
 6.1) Click on "Configure". You will see some configuration options, as seen below:
 
-<img src="https://user-images.githubusercontent.com/31496522/210155204-6ac4a275-88e1-4f19-b4a4-8dc703cdbba2.png" width="350" title="hover text">
+<img src="https://user-images.githubusercontent.com/31496522/210155204-6ac4a275-88e1-4f19-b4a4-8dc703cdbba2.png" width="500" title="hover text">
 
 6.2) By "Discord webhook url" you need to enter your webhook url. More info about Discord webhook: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
 6.3) By "Language", select your language. At the moment of writing supports this module English and Dutch.
