@@ -307,28 +307,40 @@ class DiscordNotifyer extends Module {
 		// Opening txt file
 		$lines = file($file_lang);
 
-
 		// Getting type of mail that will be send, and send right text and calls the webhook
 		switch($param["template"]){
-			case "contact_form" && Configuration::get("SWITCH_CONTACT_FORM") == "on":
-				self::webhookDiscord(strval($lines[0]));
+			// When $param is a contact form submission mail template 
+			case "contact_form":
+				if (Configuration::get("SWITCH_CONTACT_FORM") == "on"){
+					self::webhookDiscord(strval($lines[0]));
+				}
 				break;
-			case "account" && Configuration::get("SWITCH_ACCOUNT_CREATION") == "on":
-				self::webhookDiscord(strval($lines[1]));
+			// When $param is a account creation mail template 
+			case "account":
+				if (Configuration::get("SWITCH_ACCOUNT_CREATION") == "on"){
+					self::webhookDiscord(strval($lines[1]));
+				}
 				break;
-			case "order_conf" && Configuration::get("SWITCH_ORDER_CONF") == "on":
-				self::webhookDiscord(strval($lines[2]));
+			// When $param is a order confirmed mail template 
+			case "order_conf":
+				if (Configuration::get("SWITCH_ORDER_CONF") == "on"){
+					self::webhookDiscord(strval($lines[2]));
+				}
 				break;
-			case "payment" && Configuration::get("SWITCH_PAYMENT") == "on":
-				self::webhookDiscord(strval($lines[3]));
+			// When $param is a payment mail template 
+			case "payment":
+				if (Configuration::get("SWITCH_PAYMENT") == "on"){
+					self::webhookDiscord(strval($lines[3]));
+				}
 				break;
-			case "test" && Configuration::get("SWITCH_TEST") == "on":
-				self::webhookDiscord(strval($lines[4]));
-				break;			
-				
+			// When $param is a test mail template 
+			case "test":
+			if (Configuration::get("SWITCH_TEST") == "on"){
+					self::webhookDiscord(strval($lines[4]));
+				}
+				break;
+
 		}
-
 	}
-
 }
 ?>
