@@ -330,3 +330,4 @@ class DiscordNotifyer extends Module {
 	}
 
 }
+?>
