@@ -1,5 +1,5 @@
 A contact form has been submitted!
-An account has been created in the webshop!
+A account has been created in the webshop!
 A confirmed order has arrived!
 A payment has been processed in the webshop!
 A test email has been sent from the back office.
