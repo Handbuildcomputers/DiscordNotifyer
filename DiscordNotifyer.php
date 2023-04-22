@@ -12,7 +12,7 @@ class DiscordNotifyer extends Module {
 		$this->name = "DiscordNotifyer";
 		$this->tab = "checkout";
 		$this->version = "2.1.0";
-		$this->author = "Kelvin de Reus";
+		$this->author = "KelvinCodes";
 		$this->need_instance = 0;
 		// Checks compatiblity
 		$this->ps_versions_compliancy = array("min" => "1.6", "max" => "8.0.2");
