@@ -15,7 +15,7 @@ class DiscordNotifyer extends Module {
 		$this->author = "Kelvin de Reus";
 		$this->need_instance = 0;
 		// Checks compatiblity
-		$this->ps_versions_compliancy = array("min" => "1.6", "max" => "1.8.99.99");
+		$this->ps_versions_compliancy = array("min" => "1.6", "max" => "8.0.2");
 		$this->bootstrap = true;
 		// Parent contructor
 		parent::__construct();
